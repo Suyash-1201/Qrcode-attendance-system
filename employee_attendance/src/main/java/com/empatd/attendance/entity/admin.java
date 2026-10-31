@@ -1,5 +1,6 @@
 package com.empatd.attendance.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,6 +14,7 @@ public class admin {
 	private int id;
 	private String adminname;
 	private long number;
+	@Column(name = "`password`")
 	private String password;
 	private String role;
 	public int getId() {

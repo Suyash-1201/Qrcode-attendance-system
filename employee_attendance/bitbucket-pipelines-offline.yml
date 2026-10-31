@@ -1,0 +1,38 @@
+image: atlassian/default-image:3
+
+pipelines:
+  branches:
+    main:
+      # --- STEP 1: Build and Push Image ---
+      - step:
+          name: Build and Push
+          services:
+            - docker
+          script:
+            - echo "Logging in to Docker Hub..."
+            - echo $DOCKER_HUB_TOKEN | docker login --username $DOCKER_HUB_USERNAME --password-stdin
+            
+            - echo "Building the Docker image..."
+            - docker build -t qpaix/gyandiksha-sso-backend:latest .
+            
+            - echo "Pushing the Docker image..."
+            - docker push qpaix/gyandiksha-sso-backend:latest
+
+      # --- STEP 2: Deploy to K3s ---
+      - step:
+          name: Update K3s Deployment
+          script:
+
+            - echo "Installing kubectl..."
+            - curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+            - chmod +x ./kubectl
+            - mv ./kubectl /usr/local/bin/kubectl
+            # 3. Set up Kubeconfig securely using Base64
+            - mkdir -p ~/.kube
+            # tr -d removes any spaces or line breaks before decoding
+            - echo "$K3S_KUBECONFIG" | tr -d '\n\r ' | base64 -d > ~/.kube/config
+            - chmod 600 ~/.kube/config
+
+
+            - echo "Rolling out restart..."
+            - kubectl rollout restart deployment/gyandiksha-sso-backend -n gyandiksha

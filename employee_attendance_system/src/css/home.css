@@ -1,0 +1,300 @@
+
+/* ===== MAIN HOME CONTAINER ===== */
+.home-container {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  box-sizing: border-box;
+  background: linear-gradient(135deg, #eef2ff, #e0e7ff, #f5f3ff);
+  font-family: "Segoe UI", Arial, sans-serif;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Animated background circles */
+.home-container::before,
+.home-container::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(2px);
+  animation: float 7s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.home-container::before {
+  width: 300px;
+  height: 300px;
+  background: rgba(99, 102, 241, 0.13);
+  top: -100px;
+  left: -80px;
+}
+
+.home-container::after {
+  width: 250px;
+  height: 250px;
+  background: rgba(139, 92, 246, 0.13);
+  bottom: -80px;
+  right: -50px;
+  animation-delay: 2s;
+}
+
+/* ===== MAIN CONTENT ===== */
+.home-content {
+  width: 100%;
+  max-width: 1050px;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  animation: fadeIn 0.9s ease;
+}
+
+/* ===== SUBTITLE ===== */
+.home-subtitle {
+  color: #6366f1;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  margin-bottom: 15px;
+  animation: slideDown 0.8s ease;
+}
+
+/* ===== MAIN HEADING ===== */
+.home-content h1 {
+  font-size: 46px;
+  font-weight: 800;
+  color: #1e1b4b;
+  margin: 0 0 15px;
+  letter-spacing: -1px;
+}
+
+.home-description {
+  color: #64748b;
+  font-size: 17px;
+  margin-bottom: 45px;
+}
+
+/* ===== PORTAL CARDS ===== */
+.home-cards {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+/* Common card design */
+.home-card {
+  width: 340px;
+  min-height: 310px;
+  padding: 35px 28px;
+  box-sizing: border-box;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 10px 35px rgba(30, 41, 59, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.35s ease;
+  animation: cardAppear 0.9s ease backwards;
+}
+
+.admin-home-card {
+  animation-delay: 0.2s;
+}
+
+.scanner-home-card {
+  animation-delay: 0.4s;
+}
+
+/* Card hover effect */
+.home-card:hover {
+  transform: translateY(-12px);
+  box-shadow: 0 22px 45px rgba(79, 70, 229, 0.17);
+  border-color: #c7d2fe;
+}
+
+/* ===== CARD ICON ===== */
+.home-card-icon {
+  width: 75px;
+  height: 75px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 35px;
+  border-radius: 20px;
+  margin-bottom: 22px;
+  transition: transform 0.4s ease;
+}
+
+.admin-home-card .home-card-icon {
+  background: #e0e7ff;
+}
+
+.scanner-home-card .home-card-icon {
+  background: #ede9fe;
+}
+
+.home-card:hover .home-card-icon {
+  transform: rotate(-8deg) scale(1.12);
+}
+
+/* ===== CARD HEADINGS ===== */
+.home-card h2 {
+  font-size: 23px;
+  font-weight: 750;
+  color: #1e293b;
+  margin: 0 0 12px;
+}
+
+/* ===== CARD DESCRIPTION ===== */
+.home-card p {
+  font-size: 14px;
+  line-height: 1.7;
+  color: #64748b;
+  margin: 0 0 25px;
+  max-width: 280px;
+}
+
+/* ===== BUTTONS ===== */
+.home-card button {
+  padding: 12px 25px;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.admin-home-card button {
+  background: linear-gradient(135deg, #4f46e5, #6366f1);
+  box-shadow: 0 5px 15px rgba(79, 70, 229, 0.2);
+}
+
+.scanner-home-card button {
+  background: linear-gradient(135deg, #7c3aed, #a855f7);
+  box-shadow: 0 5px 15px rgba(124, 58, 237, 0.2);
+}
+
+.home-card button:hover {
+  transform: translateY(-3px);
+  filter: brightness(1.1);
+  box-shadow: 0 8px 20px rgba(79, 70, 229, 0.3);
+}
+
+.home-card button:active {
+  transform: scale(0.96);
+}
+
+/* ===== FOOTER ===== */
+.home-footer {
+  margin-top: 55px;
+  font-size: 13px;
+  color: #94a3b8;
+  letter-spacing: 0.5px;
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes cardAppear {
+  from {
+    opacity: 0;
+    transform: translateY(35px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(25px);
+  }
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 768px) {
+  .home-content h1 {
+    font-size: 34px;
+  }
+
+  .home-description {
+    font-size: 15px;
+    margin-bottom: 30px;
+  }
+
+  .home-cards {
+    gap: 20px;
+  }
+
+  .home-card {
+    width: 100%;
+    max-width: 380px;
+    min-height: 290px;
+  }
+
+  .home-footer {
+    margin-top: 35px;
+  }
+}
+
+@media (max-width: 480px) {
+  .home-container {
+    padding: 30px 15px;
+  }
+
+  .home-content h1 {
+    font-size: 29px;
+  }
+
+  .home-subtitle {
+    font-size: 10px;
+    letter-spacing: 2px;
+  }
+
+  .home-card {
+    padding: 28px 20px;
+  }
+}
+
+/* Accessibility: reduce animations if preferred */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

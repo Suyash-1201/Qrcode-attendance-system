@@ -1,0 +1,385 @@
+
+/* ===== MAIN ATTENDANCE PAGE ===== */
+
+.attendance-panel {
+  min-height: 100vh;
+  width: 100%;
+  padding: 50px 6%;
+  box-sizing: border-box;
+  background: linear-gradient(
+    135deg,
+    #eef2ff,
+    #e0e7ff,
+    #f5f3ff
+  );
+  font-family: "Segoe UI", Arial, sans-serif;
+  animation: fadeIn 0.8s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Background decoration */
+
+.attendance-panel::before,
+.attendance-panel::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: floating 7s ease-in-out infinite;
+}
+
+.attendance-panel::before {
+  width: 250px;
+  height: 250px;
+  background: rgba(99, 102, 241, 0.10);
+  top: -100px;
+  left: -70px;
+}
+
+.attendance-panel::after {
+  width: 220px;
+  height: 220px;
+  background: rgba(139, 92, 246, 0.10);
+  bottom: -80px;
+  right: -50px;
+  animation-delay: 2s;
+}
+
+/* ===== SECTION HEADING ===== */
+
+.section-heading {
+  max-width: 1200px;
+  margin: 0 auto 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 15px;
+  position: relative;
+  z-index: 1;
+  animation: slideDown 0.7s ease;
+}
+
+.section-heading h2 {
+  font-size: 30px;
+  font-weight: 800;
+  color: #1e1b4b;
+  margin: 0;
+}
+
+.section-heading h2::after {
+  content: "";
+  display: block;
+  width: 65px;
+  height: 4px;
+  background: linear-gradient(90deg, #4f46e5, #a855f7);
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+/* ===== REFRESH BUTTON ===== */
+
+.secondary-button {
+  padding: 12px 23px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(
+    135deg,
+    #4f46e5,
+    #6366f1
+  );
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 5px 15px rgba(79, 70, 229, 0.2);
+  transition: all 0.3s ease;
+}
+
+.secondary-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 9px 22px rgba(79, 70, 229, 0.3);
+}
+
+.secondary-button:active {
+  transform: scale(0.96);
+}
+
+/* ===== TABLE CONTAINER ===== */
+
+.table-container {
+  max-width: 1200px;
+  margin: auto;
+  overflow-x: auto;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 18px;
+  padding: 12px;
+  box-shadow: 0 12px 35px rgba(30, 41, 59, 0.08);
+  border: 1px solid #ffffff;
+  position: relative;
+  z-index: 1;
+  animation: slideUp 0.8s ease;
+}
+
+/* ===== TABLE ===== */
+
+.table-container table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 750px;
+}
+
+/* Table heading */
+
+.table-container thead {
+  background: linear-gradient(
+    135deg,
+    #4f46e5,
+    #6366f1
+  );
+}
+
+.table-container th {
+  padding: 17px 20px;
+  color: white;
+  font-size: 13px;
+  font-weight: 700;
+  text-align: left;
+  letter-spacing: 0.4px;
+  white-space: nowrap;
+}
+
+.table-container th:first-child {
+  border-radius: 9px 0 0 9px;
+}
+
+.table-container th:last-child {
+  border-radius: 0 9px 9px 0;
+}
+
+/* Table body */
+
+.table-container td {
+  padding: 17px 20px;
+  color: #475569;
+  font-size: 14px;
+  border-bottom: 1px solid #f1f5f9;
+  white-space: nowrap;
+}
+
+/* Table rows */
+
+.table-container tbody tr {
+  transition: all 0.25s ease;
+  animation: rowAppear 0.5s ease backwards;
+}
+
+.table-container tbody tr:nth-child(even) {
+  background: #f8faff;
+}
+
+.table-container tbody tr:hover {
+  background: #eef2ff;
+  transform: scale(1.005);
+}
+
+.table-container tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Employee ID */
+
+.table-container tbody td:first-child {
+  color: #4f46e5;
+  font-weight: 700;
+}
+
+/* Employee name */
+
+.table-container tbody td:nth-child(2) {
+  color: #1e293b;
+  font-weight: 650;
+}
+
+/* Check-in time */
+
+.table-container tbody td:last-child {
+  color: #16a34a;
+  font-weight: 700;
+}
+
+/* ===== LOADING AND EMPTY MESSAGE ===== */
+
+.attendance-panel > p {
+  max-width: 1200px;
+  margin: 25px auto;
+  padding: 25px;
+  background: white;
+  border-radius: 14px;
+  color: #64748b;
+  text-align: center;
+  font-size: 15px;
+  box-shadow: 0 5px 20px rgba(30, 41, 59, 0.05);
+  position: relative;
+  z-index: 1;
+  animation: fadeIn 0.5s ease;
+}
+
+/* ===== SHOW EMPLOYEE BUTTON ===== */
+
+.attendance-panel > div:last-child {
+  max-width: 1200px;
+  margin: 30px auto 0;
+  display: flex;
+  justify-content: flex-end;
+  position: relative;
+  z-index: 1;
+}
+
+.attendance-panel > div:last-child button {
+  padding: 13px 28px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(
+    135deg,
+    #7c3aed,
+    #a855f7
+  );
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 5px 15px rgba(124, 58, 237, 0.2);
+  transition: all 0.3s ease;
+}
+
+.attendance-panel > div:last-child button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 9px 22px rgba(124, 58, 237, 0.3);
+}
+
+.attendance-panel > div:last-child button:active {
+  transform: scale(0.96);
+}
+
+/* ===== ANIMATIONS ===== */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes rowAppear {
+  from {
+    opacity: 0;
+    transform: translateX(-15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes floating {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(25px);
+  }
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+
+@media (max-width: 768px) {
+
+  .attendance-panel {
+    padding: 35px 18px;
+  }
+
+  .section-heading h2 {
+    font-size: 25px;
+  }
+
+  .section-heading {
+    align-items: flex-start;
+  }
+
+  .table-container {
+    padding: 8px;
+    border-radius: 12px;
+  }
+
+  .table-container th,
+  .table-container td {
+    padding: 14px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+
+  .attendance-panel {
+    padding: 25px 12px;
+  }
+
+  .section-heading h2 {
+    font-size: 22px;
+  }
+
+  .section-heading {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .secondary-button {
+    width: 100%;
+  }
+
+  .attendance-panel > div:last-child {
+    justify-content: center;
+  }
+
+  .attendance-panel > div:last-child button {
+    width: 100%;
+  }
+
+}
+
+/* ===== ACCESSIBILITY ===== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

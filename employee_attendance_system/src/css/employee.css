@@ -1,0 +1,164 @@
+
+* {
+    box-sizing: border-box;
+}
+
+.employee-container {
+    width: 100%;
+    min-height: 100vh;
+    padding: 30px;
+    background-color: #f5f7fb;
+}
+
+/* Header */
+
+.employee-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    gap: 15px;
+}
+
+.employee-header h1 {
+    font-size: 28px;
+    color: #222;
+    margin: 0 0 8px;
+}
+
+.employee-header p {
+    color: #777;
+    font-size: 14px;
+    margin: 0;
+}
+
+/* Refresh button */
+
+.refresh-btn {
+    padding: 11px 20px;
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.refresh-btn:hover {
+    background-color: #1d4ed8;
+}
+
+.refresh-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Table container */
+
+.employee-table-container {
+    width: 100%;
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    overflow-x: auto;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+/* Employee table */
+
+.employee-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 650px;
+}
+
+.employee-table th {
+    background-color: #1e293b;
+    color: white;
+    padding: 15px;
+    text-align: left;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.employee-table td {
+    padding: 15px;
+    border-bottom: 1px solid #e5e7eb;
+    color: #444;
+    font-size: 14px;
+}
+
+.employee-table tbody tr:hover {
+    background-color: #f8fafc;
+}
+
+.employee-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Delete button */
+
+.delete-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 8px 13px;
+    background-color: #fee2e2;
+    color: #dc2626;
+    border: none;
+    border-radius: 5px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.delete-btn:hover {
+    background-color: #dc2626;
+    color: white;
+}
+
+.delete-btn img {
+    width: 17px;
+    height: 17px;
+    object-fit: contain;
+}
+
+/* Loading */
+
+.loading-text {
+    text-align: center;
+    padding: 30px;
+    color: #666;
+}
+
+/* Empty message */
+
+.empty-message {
+    text-align: center !important;
+    padding: 30px !important;
+    color: #888 !important;
+}
+
+/* Responsive design */
+
+@media (max-width: 600px) {
+
+    .employee-container {
+        padding: 15px;
+    }
+
+    .employee-header {
+        align-items: flex-start;
+    }
+
+    .employee-header h1 {
+        font-size: 22px;
+    }
+
+    .employee-table-container {
+        padding: 10px;
+    }
+
+}

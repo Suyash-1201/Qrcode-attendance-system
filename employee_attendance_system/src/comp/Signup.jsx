@@ -3,8 +3,9 @@ import axios from "axios";
 import { Html5Qrcode } from "html5-qrcode";
 import '../css/scan.css'
 import { useNavigate } from "react-router-dom";
+import Api from "../Api";
 
-const API_URL = "http://localhost:8080/api";
+
 
 function Signup() {
 
@@ -29,7 +30,7 @@ function Signup() {
     try {
 
       const response = await axios.post(
-        `${API_URL}/employee/signup`,
+        `${Api}/api/employee/signup`,
         {
           name: name,
           number: Number(number),

@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import axios from "axios";
+import Api from "../Api";
 
 const Protectedroute = () => {
 
@@ -24,7 +25,7 @@ const Protectedroute = () => {
       try {
 
         const res = await axios.get(
-          `http://localhost:8080/admin/getadmin/${num}`
+          `${Api}/admin/getadmin/${num}`
         );
 
         setUser(res.data);

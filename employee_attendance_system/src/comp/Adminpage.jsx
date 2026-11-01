@@ -4,9 +4,10 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../css/adminpage.css";
+import Api from "../Api";
 
-const ADMIN_API = "http://localhost:8080/admin";
-const EMPLOYEE_API = "http://localhost:8080/api";
+// const ADMIN_API = "http://localhost:8080/admin";
+// const EMPLOYEE_API = "http://localhost:8080/api";
 
 const Adminpage = () => {
 
@@ -35,7 +36,7 @@ const Adminpage = () => {
       setAdminError("");
 
       const response = await axios.get(
-        `${ADMIN_API}/alladmin`
+        `${Api}/admin/alladmin`
       );
 
       setAdmins(response.data);
@@ -58,7 +59,7 @@ const Adminpage = () => {
       setEmployeeError("");
 
       const response = await axios.get(
-        `${EMPLOYEE_API}/getemployees`
+        `${Api}/api/getemployees`
       );
 
       setEmployees(response.data);
@@ -130,7 +131,7 @@ const Adminpage = () => {
       setEmployeeMessage("");
 
       await axios.delete(
-        `${EMPLOYEE_API}/delete/${id}`
+        `${Api}/api/delete/${id}`
       );
 
       setEmployees((prev) =>

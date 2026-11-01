@@ -3,8 +3,9 @@ import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { Html5Qrcode } from "html5-qrcode";
 import "../css/scan.css";
+import Api from "../Api";
 
-const API_URL = "http://localhost:8080/api";
+
 
 function Scan() {
 
@@ -61,7 +62,7 @@ function Scan() {
     try {
 
       const response = await axios.post(
-        `${API_URL}/attendance/scan`,
+        `${Api}/api/attendance/scan`,
         {
           qrtiken: qrToken
         }

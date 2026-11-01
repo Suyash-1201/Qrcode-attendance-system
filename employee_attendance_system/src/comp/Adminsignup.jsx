@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../css/signup.css";
+import Api from "../Api";
 
 const Adminsignup = () => {
 
@@ -67,7 +68,7 @@ const Adminsignup = () => {
       setSuccess("");
 
       await axios.post(
-        "http://localhost:8080/admin/save",
+        `${Api}/admin/save`,
         {
           adminname: admin.adminname.trim(),
           number: admin.number,

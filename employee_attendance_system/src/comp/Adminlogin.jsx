@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../css/login.css";
+import Api from "../Api";
 
 const Adminlogin = () => {
 
@@ -63,7 +64,7 @@ const Adminlogin = () => {
       setValidationErrors({});
 
       const response = await axios.post(
-        "http://localhost:8080/admin/login",
+        `${Api}/admin/login`,
         {
           number: Number(login.number),
           password: login.password

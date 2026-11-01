@@ -3,8 +3,9 @@ import axios from "axios";
 import { Html5Qrcode } from "html5-qrcode";
 import '../css/attendance.css'
 import { useNavigate } from "react-router-dom";
+import Api from "../Api";
 
-const API_URL = "http://localhost:8080/api";
+
 const Attendance = () => {
 
     const [attendanceList, setAttendanceList] = useState([]);
@@ -25,7 +26,7 @@ const Attendance = () => {
     try {
 
       const response = await axios.get(
-        `${API_URL}/attendance/today`
+        `${Api}/api/attendance/today`
       );
 
       setAttendanceList(response.data);

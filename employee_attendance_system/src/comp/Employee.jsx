@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import '../css/employee.css';
 import axios from 'axios';
+import Api from '../Api';
 
 const Employee = () => {
 
@@ -16,7 +17,7 @@ const Employee = () => {
         try {
 
             const res = await axios.get(
-                "http://localhost:8080/api/getemployees"
+                `${Api}/api/getemployees`
             );
 
             setuser(res.data);
@@ -46,7 +47,7 @@ const Employee = () => {
         try {
 
             await axios.delete(
-                `http://localhost:8080/api/delete/${id}`
+                `${Api}/api/delete/${id}`
             );
 
             // Reload employee list

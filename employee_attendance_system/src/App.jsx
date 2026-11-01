@@ -11,6 +11,7 @@ import Adminsignup from './comp/Adminsignup'
 import Adminlogin from './comp/Adminlogin'
 import Protectedroute from './comp/Protectedroute'
 import Home from './comp/Home'
+import Getcode from './comp/Getcode'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -30,6 +31,7 @@ function App() {
       <Route path='/' element={<Home/>}/>
       <Route path='/login' element={<Adminlogin/>}/>
      <Route path='/scan' element={<Scan/>}/>
+     <Route path='getcode' element={<Getcode/>}/>
      </Routes>
     
   )

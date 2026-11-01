@@ -51,4 +51,10 @@ public class employeecontoller {
 	public ResponseEntity<List<employee>> getallemployees(){
 		return ResponseEntity.ok().body(empserv.allemployees());
 	}
+	
+	@GetMapping("/getcode/{number}")
+	public ResponseEntity<?> getempbynum(@PathVariable long number){
+		
+		return ResponseEntity.ok().body(empserv.getcode(number));
+	}
 }

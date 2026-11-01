@@ -47,16 +47,16 @@ const Home = () => {
           {/* SCANNER BOX */}
           <div
             className="home-card scanner-home-card"
-            onClick={() => navigate("/scan")}
+            onClick={() => navigate("/getcode")}
           >
             <div className="home-card-icon">
               📷
             </div>
 
-            <h2>Scanner Portal</h2>
+            <h2>Qrcode Portal</h2>
 
             <p>
-              Scan employee QR codes to mark attendance
+              Get employee QR codes to mark attendance
               quickly and easily.
             </p>
 

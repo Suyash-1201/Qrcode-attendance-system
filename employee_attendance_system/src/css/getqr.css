@@ -1,0 +1,329 @@
+/* ===== MAIN PAGE CONTAINER ===== */
+
+.qr-container {
+  min-height: 100vh;
+  width: 100%;
+  padding: 40px 20px;
+  box-sizing: border-box;
+  background: linear-gradient(135deg, #eef2ff, #e0e7ff, #f5f3ff);
+  font-family: "Segoe UI", Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Background floating decorations */
+
+.qr-container::before,
+.qr-container::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: floating 7s ease-in-out infinite;
+}
+
+.qr-container::before {
+  width: 320px;
+  height: 320px;
+  background: rgba(99, 102, 241, 0.08);
+  top: -100px;
+  left: -80px;
+}
+
+.qr-container::after {
+  width: 280px;
+  height: 280px;
+  background: rgba(139, 92, 246, 0.08);
+  bottom: -90px;
+  right: -60px;
+  animation-delay: 2s;
+}
+
+/* ===== CONTENT WRAPPER ===== */
+
+.qr-content-wrapper {
+  width: 100%;
+  max-width: 600px;
+  position: relative;
+  z-index: 1;
+  animation: fadeIn 0.8s ease;
+}
+
+/* ===== HEADER ===== */
+
+.qr-header {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.qr-icon {
+  font-size: 40px;
+  margin-bottom: 10px;
+  animation: bounce 2s infinite;
+}
+
+.qr-subtitle {
+  font-size: 12px;
+  font-weight: 700;
+  color: #4f46e5;
+  letter-spacing: 1.2px;
+  margin: 0 0 5px 0;
+}
+
+.qr-header h1 {
+  font-size: 28px;
+  font-weight: 800;
+  color: #1e1b4b;
+  margin: 0 0 10px 0;
+}
+
+.qr-description {
+  font-size: 14px;
+  color: #64748b;
+  margin: 0;
+}
+
+/* ===== CARD ===== */
+
+.qr-card {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 15px 35px rgba(30, 41, 59, 0.08);
+  border: 1px solid #ffffff;
+  animation: slideUp 0.7s ease;
+  box-sizing: border-box;
+}
+
+/* ===== FORM & INPUTS ===== */
+
+.qr-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.input-group label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #334155;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 15px;
+  color: #1e293b;
+  outline: none;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+  background: #f8fafc;
+}
+
+.input-group input:focus {
+  border-color: #4f46e5;
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+}
+
+/* ===== FETCH BUTTON ===== */
+
+.fetch-button {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #4f46e5, #6366f1);
+  color: white;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(79, 70, 229, 0.25);
+  transition: all 0.3s ease;
+}
+
+.fetch-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(79, 70, 229, 0.35);
+}
+
+.fetch-button:active {
+  transform: scale(0.98);
+}
+
+.fetch-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* ===== ERROR ALERT ===== */
+
+.error-alert {
+  margin-top: 20px;
+  padding: 12px 16px;
+  background: #fef2f2;
+  border: 1px solid #fee2e2;
+  color: #dc2626;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  animation: shake 0.4s ease;
+}
+
+.error-alert span {
+  width: 20px;
+  height: 20px;
+  background: #dc2626;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+}
+
+/* ===== QR RESULT BOX ===== */
+
+.qr-result-box {
+  margin-top: 25px;
+  padding-top: 20px;
+  border-top: 2px dashed #e2e8f0;
+  text-align: center;
+  animation: fadeIn 0.5s ease;
+}
+
+.qr-result-box h3 {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 15px;
+}
+
+.image-wrapper {
+  background: white;
+  padding: 15px;
+  border-radius: 14px;
+  display: inline-block;
+  box-shadow: 0 5px 20px rgba(30, 41, 59, 0.08);
+  border: 1px solid #e2e8f0;
+  margin-bottom: 15px;
+}
+
+.image-wrapper img {
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+  display: block;
+}
+
+.download-button {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  background: #16a34a;
+  color: white;
+  text-decoration: none;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 14px;
+  box-shadow: 0 5px 15px rgba(22, 163, 74, 0.2);
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.download-button:hover {
+  background: #15803d;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(22, 163, 74, 0.3);
+}
+
+/* ===== FOOTER ===== */
+
+.qr-footer {
+  text-align: center;
+  margin-top: 25px;
+  font-size: 13px;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+/* ===== ANIMATIONS ===== */
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(25px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes floating {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(20px); }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+/* ===== RESPONSIVE DESIGN: ULTRA-SMALL DEVICES / JIOPHONE 2 (Max 320px) ===== */
+
+@media (max-width: 320px) {
+  .qr-container {
+    padding: 15px 6px;
+  }
+
+  .qr-card {
+    padding: 15px;
+    border-radius: 14px;
+  }
+
+  .qr-header h1 {
+    font-size: 21px;
+  }
+
+  .qr-description {
+    font-size: 12px;
+  }
+
+  .input-group input {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+
+  .fetch-button {
+    padding: 11px;
+    font-size: 13px;
+  }
+
+  .image-wrapper img {
+    width: 150px;
+    height: 150px;
+  }
+}

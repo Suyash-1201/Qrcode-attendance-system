@@ -105,4 +105,22 @@ public class employeeservice {
 		}
 		return emplist;
 	}
-}
+	
+	public byte[] getcode(long number){
+		
+		employee eml=emprepo.findByNumber(number);
+		
+		if(eml == null) {
+			throw new RuntimeException("Employee not found");
+		}
+		
+		byte[] qrtokan = null;
+		try {
+			qrtokan = qrcodeservce.generateqrcode(eml.getQrtoken());
+		} catch (WriterException | IOException e) {
+			e.printStackTrace();
+		}
+		
+		return qrtokan;
+	}
+    }

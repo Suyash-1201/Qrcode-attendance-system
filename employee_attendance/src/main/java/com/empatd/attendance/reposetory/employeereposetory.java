@@ -13,5 +13,7 @@ public interface employeereposetory extends JpaRepository<employee, Integer> {
 	public boolean existsByNumber(long number);
 	
 	 public employee findByQrtoken(String qrtoken);
+	 
+	 public employee findByNumber(long number);
 	
 }

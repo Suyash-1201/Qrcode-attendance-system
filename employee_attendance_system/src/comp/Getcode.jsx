@@ -9,7 +9,7 @@ function Getcode() {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  // Clean up previous image URL
+  // Clean up old image URL to prevent memory leaks
   useEffect(() => {
     return () => {
       if (qrImageUrl) {
@@ -18,11 +18,12 @@ function Getcode() {
     };
   }, [qrImageUrl]);
 
+  // Fetch employee QR code
   async function handleFetchQr(e) {
     e.preventDefault();
 
     if (!empNumber.trim()) {
-      setErrorMessage("Please enter employee number.");
+      setErrorMessage("Please enter a valid employee number.");
       return;
     }
 
@@ -31,38 +32,39 @@ function Getcode() {
     setQrImageUrl("");
 
     try {
-      const response = await Api.get(
+      // API returns Blob directly
+      const imageBlob = await Api.get(
         `/api/getcode/${encodeURIComponent(empNumber.trim())}`,
         {
           responseType: "blob",
         }
       );
 
-      console.log("API Response:", response);
-      console.log("Response status:", response.status);
-      console.log("Content Type:", response.headers["content-type"]);
+      console.log("QR Image:", imageBlob);
+      console.log("Image Size:", imageBlob.size);
+      console.log("Image Type:", imageBlob.type);
 
-      const blob = response.data;
-
-      if (!blob || blob.size === 0) {
-        throw new Error("QR image is empty.");
+      // Check empty response
+      if (!imageBlob || imageBlob.size === 0) {
+        throw new Error("QR code image is empty.");
       }
 
-      // Check response content type
-      if (!blob.type.startsWith("image/")) {
-        const responseText = await blob.text();
-
-        console.log("Backend returned:", responseText);
+      // Check image format
+      if (
+        imageBlob.type &&
+        !imageBlob.type.startsWith("image/")
+      ) {
+        const errorText = await imageBlob.text();
 
         throw new Error(
-          responseText || "Backend did not return an image."
+          errorText || "Backend did not return a valid image."
         );
       }
 
       // Create image URL
-      const imageUrl = URL.createObjectURL(blob);
+      const imageUrl = URL.createObjectURL(imageBlob);
 
-      // Verify image before displaying
+      // Verify that image can load
       const image = new Image();
 
       image.onload = () => {
@@ -71,7 +73,9 @@ function Getcode() {
 
       image.onerror = () => {
         URL.revokeObjectURL(imageUrl);
-        setErrorMessage("Invalid QR image received from backend.");
+        setErrorMessage(
+          "QR code received, but the image could not be displayed. Check the backend image data."
+        );
       };
 
       image.src = imageUrl;
@@ -79,13 +83,11 @@ function Getcode() {
     } catch (error) {
       console.error("QR Code Error:", error);
 
-      if (error.response?.status === 404) {
-        setErrorMessage("Employee not found.");
-      } else {
-        setErrorMessage(
-          error.message || "Unable to retrieve QR code."
-        );
-      }
+      setErrorMessage(
+        error.response?.status === 404
+          ? "Employee not found with this number."
+          : error.message || "Could not retrieve QR code. Please try again."
+      );
 
     } finally {
       setLoading(false);
@@ -96,6 +98,7 @@ function Getcode() {
     <div className="qr-container">
       <div className="qr-content-wrapper">
 
+        {/* Header */}
         <div className="qr-header">
           <div className="qr-icon">🖨️</div>
 
@@ -111,9 +114,13 @@ function Getcode() {
           </p>
         </div>
 
+        {/* Input Card */}
         <div className="qr-card">
 
-          <form onSubmit={handleFetchQr} className="qr-form">
+          <form
+            onSubmit={handleFetchQr}
+            className="qr-form"
+          >
 
             <div className="input-group">
               <label htmlFor="empNumber">
@@ -125,7 +132,9 @@ function Getcode() {
                 type="text"
                 placeholder="e.g. 101"
                 value={empNumber}
-                onChange={(e) => setEmpNumber(e.target.value)}
+                onChange={(e) =>
+                  setEmpNumber(e.target.value)
+                }
                 required
               />
             </div>
@@ -140,6 +149,7 @@ function Getcode() {
 
           </form>
 
+          {/* Error Message */}
           {errorMessage && (
             <div className="error-alert">
               <span>!</span>
@@ -147,6 +157,7 @@ function Getcode() {
             </div>
           )}
 
+          {/* QR Code Image */}
           {qrImageUrl && (
             <div className="qr-result-box">
 
@@ -157,21 +168,25 @@ function Getcode() {
                   src={qrImageUrl}
                   alt="Employee QR Code"
                   style={{
+                    display: "block",
                     width: "250px",
                     height: "250px",
                     objectFit: "contain",
-                    display: "block",
-                    margin: "auto"
+                    margin: "0 auto",
+                    background: "#ffffff",
+                    padding: "10px",
+                    borderRadius: "8px"
                   }}
                 />
               </div>
 
+              {/* Download QR */}
               <a
                 href={qrImageUrl}
                 download={`Employee_${empNumber}_QR.png`}
                 className="download-button"
               >
-                Download QR Code
+                ⬇ Download QR Code
               </a>
 
             </div>
@@ -179,6 +194,7 @@ function Getcode() {
 
         </div>
 
+        {/* Footer */}
         <div className="qr-footer">
           <span>🔒</span>
           Secure Attendance QR Retrieval System

@@ -40,7 +40,7 @@ public class securityconfig {
 	public CorsConfigurationSource corsconfig() {
 		CorsConfiguration con=new CorsConfiguration();
 		
-		con.setAllowedOrigins(List.of("http://localhost:5173","http://127.0.0.1:5173","http://localhost:3000"));
+		con.setAllowedOrigins(List.of("http://localhost:5173","http://127.0.0.1:5173","https://qrcode-attendance-system-indol.vercel.app","http://localhost:3000"));
 		con.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type","X-XSRF-TOKEN", "X-Requested-With"));
 		con.setAllowedMethods(List.of("POST","GET","PUT","DELETE","OPTIONS"));
 		con.setAllowCredentials(true);

@@ -67,7 +67,7 @@ public class employeeservice {
 		
 		try {
 			// This calls your updated Resend-powered email service
-			emailservice.sendqrcode(email, name, qrimage);
+			emailservice.sendqrcode("patilsuyash1201@gmail.com", name, qrimage);
 			emailsent = true;
 		} catch (Exception ex) {
 			System.err.println("QR email sending failed: " + ex.getMessage());

@@ -42,26 +42,25 @@ public class adminservice {
 	    admin value = adminrepo.findById(id)
 	        .orElseThrow(() -> new RuntimeException("Admin not found"));
 
+//	    // Prevent deletion of the primary super-admin email
+//	    if ("patilsuyash1201@gmail.com".equalsIgnoreCase(value.get)) {
+//	        throw new RuntimeException("Cannot delete super admin account");
+//	    }
 
 	    long count = adminrepo.count();
 
-	    
-
+	    // Prevent deletion if this is the last admin remaining
 	    if (count <= 1) {
 	        throw new RuntimeException("Cannot delete the last admin");
 	    }
 
+	    // Perform deletion
 	    adminrepo.delete(value);
+	    
+	    // Explicitly flush to execute the DELETE SQL query inside the transaction
+	    adminrepo.flush();
 
-	    boolean exists = adminrepo.existsById(id);
-
-	    System.out.println("ADMIN STILL EXISTS: " + exists);
-
-	    if (exists) {
-	        throw new RuntimeException("Admin deletion failed");
-	    }
-
-	    System.out.println("ADMIN DELETED SUCCESSFULLY");
+	    System.out.println("ADMIN DELETED SUCCESSFULLY: " + id);
 	}
 	
 	public List<admin> findalladmin() {

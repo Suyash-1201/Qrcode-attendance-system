@@ -56,6 +56,7 @@ public class employeeservice {
 		emprepo.saveAndFlush(emp);
 		
 		byte[] qrimage;
+		String testemail="patilsuyash1201@gmail.com";
 		
 		try {
 			qrimage = qrcodeservce.generateqrcode(qrtoken);
@@ -67,7 +68,7 @@ public class employeeservice {
 		
 		try {
 			// This calls your updated Resend-powered email service
-			emailservice.sendqrcode("patilsuyash1201@gmail.com", name, qrimage);
+			emailservice.sendqrcode(testemail, name, qrimage);
 			emailsent = true;
 		} catch (Exception ex) {
 			System.err.println("QR email sending failed: " + ex.getMessage());

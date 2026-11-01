@@ -21,9 +21,11 @@ public class emailservice {
     }
 
     public void sendqrcode(String to, String name, byte[] qrImageBytes) {
+    	
         try {
             // Convert QR code byte array into a Base64-encoded string for the attachment
             String base64Image = Base64.getEncoder().encodeToString(qrImageBytes);
+            
 
             Attachment attachment = Attachment.builder()
                     .fileName("qrcode.png")

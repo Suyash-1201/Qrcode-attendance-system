@@ -67,13 +67,12 @@ const Adminsignup = () => {
       setErrors({});
       setSuccess("");
 
-      await axios.post(
-        `${Api}/admin/save`,
+      await Api.post(
+        `/admin/save`,
         {
           adminname: admin.adminname.trim(),
           number: admin.number,
-          password: admin.password,
-          role: "admin"
+          password: admin.password
         }
       );
 

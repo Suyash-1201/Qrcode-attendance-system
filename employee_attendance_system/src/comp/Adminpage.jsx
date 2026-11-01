@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { resolvePath, useNavigate } from "react-router-dom";
 import "../css/adminpage.css";
 import Api from "../Api";
 
@@ -35,11 +35,11 @@ const Adminpage = () => {
       setAdminLoading(true);
       setAdminError("");
 
-      const response = await axios.get(
-        `${Api}/admin/alladmin`
+      const response = await Api.get(
+        `/admin/alladmin`
       );
 
-      setAdmins(response.data);
+      setAdmins(response);
 
     } catch (err) {
 
@@ -58,11 +58,11 @@ const Adminpage = () => {
       setEmployeeLoading(true);
       setEmployeeError("");
 
-      const response = await axios.get(
-        `${Api}/api/getemployees`
+      const response = await Api.get(
+        `/api/getemployees`
       );
 
-      setEmployees(response.data);
+      setEmployees(response);
 
     } catch (err) {
 
@@ -91,8 +91,8 @@ const Adminpage = () => {
       setAdminError("");
       setAdminMessage("");
 
-      await axios.delete(
-        `${ADMIN_API}/delete/${id}`
+      await Api.delete(
+        `/admin/delete/${id}`
       );
 
       setAdmins((prev) =>
@@ -130,8 +130,8 @@ const Adminpage = () => {
       setEmployeeError("");
       setEmployeeMessage("");
 
-      await axios.delete(
-        `${Api}/api/delete/${id}`
+      await Api.delete(
+        `/api/delete/${id}`
       );
 
       setEmployees((prev) =>

@@ -16,8 +16,8 @@ const Employee = () => {
 
         try {
 
-            const res = await axios.get(
-                `${Api}/api/getemployees`
+            const res = await Api.get(
+                `/api/getemployees`
             );
 
             setuser(res.data);
@@ -46,8 +46,8 @@ const Employee = () => {
 
         try {
 
-            await axios.delete(
-                `${Api}/api/delete/${id}`
+            await Api.delete(
+                `/api/delete/${id}`
             );
 
             // Reload employee list

@@ -24,13 +24,12 @@ const Protectedroute = () => {
 
       try {
 
-        const res = await axios.get(
-          `${Api}/admin/getadmin/${num}`
+        const res = await Api.get(
+          `/admin/getadmin/${num}`
         );
 
-        setUser(res.data);
-
-        console.log("Admin data:", res.data);
+        setUser(res);
+        console.log("Admin data:", res);
 
       } catch (error) {
 

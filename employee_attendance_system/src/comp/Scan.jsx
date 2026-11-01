@@ -61,8 +61,8 @@ function Scan() {
 
     try {
 
-      const response = await axios.post(
-        `${Api}/api/attendance/scan`,
+      const response = await Api.post(
+        `/api/attendance/scan`,
         {
           qrtiken: qrToken
         }

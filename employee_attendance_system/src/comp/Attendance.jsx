@@ -25,8 +25,8 @@ const Attendance = () => {
 
     try {
 
-      const response = await axios.get(
-        `${Api}/api/attendance/today`
+      const response = await Api.get(
+        `/api/attendance/today`
       );
 
       setAttendanceList(response.data);

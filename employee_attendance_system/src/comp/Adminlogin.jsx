@@ -63,8 +63,8 @@ const Adminlogin = () => {
       setSuccess("");
       setValidationErrors({});
 
-      const response = await axios.post(
-        `${Api}/admin/login`,
+      const response = await Api.post(
+        `/admin/login`,
         {
           number: Number(login.number),
           password: login.password

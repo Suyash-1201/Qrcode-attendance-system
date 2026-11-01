@@ -10,7 +10,7 @@ const Api = axios.create({
     'Content-Type': 'application/json',
     Accept: 'application/json',
   },
-  timeout: 10000, // 10 seconds timeout
+  timeout: 70000, // 70 seconds timeout
 });
 
 // Response Interceptor (Global Error Handling)

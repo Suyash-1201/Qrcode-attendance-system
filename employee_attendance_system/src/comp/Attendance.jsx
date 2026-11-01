@@ -29,7 +29,7 @@ const Attendance = () => {
         `/api/attendance/today`
       );
 
-      setAttendanceList(response.data);
+      setAttendanceList(response);
 
     } catch (error) {
 
@@ -85,6 +85,7 @@ const Attendance = () => {
                     <th>Email</th>
                     <th>Date</th>
                     <th>Check-in Time</th>
+                    <th>Check-out Time</th>
                   </tr>
                 </thead>
 
@@ -103,9 +104,11 @@ const Attendance = () => {
                       <td>{attendance.attendancedate}</td>
 
                       <td>
-                        {new Date(
-                          attendance.checkInTime
-                        ).toLocaleTimeString()}
+                       {attendance.checkin ? new Date(attendance.checkin.endsWith("Z") ? attendance.checkin : attendance.checkin + "Z").toLocaleTimeString() : "N/A"}
+                      </td>
+
+                      <td>
+                        {attendance.checkout ? new Date(attendance.checkout.endsWith("Z") ? attendance.checkout : attendance.checkout + "Z").toLocaleTimeString() : "N/A"}
                       </td>
 
                     </tr>

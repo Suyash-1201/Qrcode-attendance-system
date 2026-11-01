@@ -201,15 +201,17 @@ const Adminpage = () => {
 
           </div>
 
-          <div className="welcome-actions">
-
-            {/* ATTENDANCE BUTTON */}
-            <button
+           {/* ATTENDANCE BUTTON */}
+           <button
               className="attendance-btn"
               onClick={() => navigate("/attendance")}
             >
               📋 Attendance
             </button>
+          <div className="welcome-actions">
+
+          
+           
 
             {/* ADD ADMIN BUTTON */}
             <button

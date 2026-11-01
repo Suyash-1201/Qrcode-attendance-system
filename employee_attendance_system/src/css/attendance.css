@@ -1,385 +1,271 @@
 
-/* ===== MAIN ATTENDANCE PAGE ===== */
+
+/* ===== GLOBAL ===== */
+
+* {
+    box-sizing: border-box;
+}
+
+html, body, #root {
+    width: 100%;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+/* ===== ATTENDANCE PAGE ===== */
 
 .attendance-panel {
-  min-height: 100vh;
-  width: 100%;
-  padding: 50px 6%;
-  box-sizing: border-box;
-  background: linear-gradient(
-    135deg,
-    #eef2ff,
-    #e0e7ff,
-    #f5f3ff
-  );
-  font-family: "Segoe UI", Arial, sans-serif;
-  animation: fadeIn 0.8s ease;
-  position: relative;
-  overflow: hidden;
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    min-height: 100vh;
+    margin: 0;
+    padding: 30px;
+    background-color: #f5f7fb;
+    border-radius: 0;
+    box-shadow: none;
+    animation: fadeIn 0.6s ease-in-out;
 }
 
-/* Background decoration */
-
-.attendance-panel::before,
-.attendance-panel::after {
-  content: "";
-  position: absolute;
-  border-radius: 50%;
-  pointer-events: none;
-  animation: floating 7s ease-in-out infinite;
-}
-
-.attendance-panel::before {
-  width: 250px;
-  height: 250px;
-  background: rgba(99, 102, 241, 0.10);
-  top: -100px;
-  left: -70px;
-}
-
-.attendance-panel::after {
-  width: 220px;
-  height: 220px;
-  background: rgba(139, 92, 246, 0.10);
-  bottom: -80px;
-  right: -50px;
-  animation-delay: 2s;
-}
-
-/* ===== SECTION HEADING ===== */
+/* ===== HEADER ===== */
 
 .section-heading {
-  max-width: 1200px;
-  margin: 0 auto 30px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 15px;
-  position: relative;
-  z-index: 1;
-  animation: slideDown 0.7s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    gap: 15px;
+    animation: slideDown 0.6s ease;
 }
 
 .section-heading h2 {
-  font-size: 30px;
-  font-weight: 800;
-  color: #1e1b4b;
-  margin: 0;
-}
-
-.section-heading h2::after {
-  content: "";
-  display: block;
-  width: 65px;
-  height: 4px;
-  background: linear-gradient(90deg, #4f46e5, #a855f7);
-  border-radius: 10px;
-  margin-top: 10px;
+    font-size: 28px;
+    color: #222;
+    margin: 0;
+    font-weight: 700;
 }
 
 /* ===== REFRESH BUTTON ===== */
 
 .secondary-button {
-  padding: 12px 23px;
-  border: none;
-  border-radius: 10px;
-  background: linear-gradient(
-    135deg,
-    #4f46e5,
-    #6366f1
-  );
-  color: white;
-  font-size: 14px;
-  font-weight: 700;
-  cursor: pointer;
-  box-shadow: 0 5px 15px rgba(79, 70, 229, 0.2);
-  transition: all 0.3s ease;
+    width: 112px;
+    padding: 11px 20px;
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
 .secondary-button:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 9px 22px rgba(79, 70, 229, 0.3);
+    background-color: #1d4ed8;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 12px rgba(37, 99, 235, 0.2);
 }
 
 .secondary-button:active {
-  transform: scale(0.96);
+    transform: scale(0.96);
 }
 
-/* ===== TABLE CONTAINER ===== */
+/* ===== TABLE CARD ===== */
 
 .table-container {
-  max-width: 1200px;
-  margin: auto;
-  overflow-x: auto;
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 18px;
-  padding: 12px;
-  box-shadow: 0 12px 35px rgba(30, 41, 59, 0.08);
-  border: 1px solid #ffffff;
-  position: relative;
-  z-index: 1;
-  animation: slideUp 0.8s ease;
+    width: 100%;
+    max-width: 100%;
+    background-color: white;
+    border-radius: 12px;
+    padding: 25px;
+    overflow-x: auto;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    animation: slideUp 0.7s ease;
+    transition: box-shadow 0.3s ease;
 }
 
-/* ===== TABLE ===== */
+.table-container:hover {
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.08);
+}
+
+/* ===== ATTENDANCE TABLE ===== */
 
 .table-container table {
-  width: 100%;
-  border-collapse: collapse;
-  min-width: 750px;
+    width: 100%;
+    min-width: 750px;
+    border-collapse: collapse;
 }
 
-/* Table heading */
-
-.table-container thead {
-  background: linear-gradient(
-    135deg,
-    #4f46e5,
-    #6366f1
-  );
-}
+/* Table Header */
 
 .table-container th {
-  padding: 17px 20px;
-  color: white;
-  font-size: 13px;
-  font-weight: 700;
-  text-align: left;
-  letter-spacing: 0.4px;
-  white-space: nowrap;
+    background-color: #1e293b;
+    color: white;
+    padding: 19px;
+    text-align: left;
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap;
 }
 
-.table-container th:first-child {
-  border-radius: 9px 0 0 9px;
-}
-
-.table-container th:last-child {
-  border-radius: 0 9px 9px 0;
-}
-
-/* Table body */
+/* Table Data */
 
 .table-container td {
-  padding: 17px 20px;
-  color: #475569;
-  font-size: 14px;
-  border-bottom: 1px solid #f1f5f9;
-  white-space: nowrap;
+    padding: 19px;
+    border-bottom: 1px solid #e5e7eb;
+    color: #444;
+    font-size: 14px;
 }
 
-/* Table rows */
+/* Table Hover */
 
 .table-container tbody tr {
-  transition: all 0.25s ease;
-  animation: rowAppear 0.5s ease backwards;
-}
-
-.table-container tbody tr:nth-child(even) {
-  background: #f8faff;
+    transition: background-color 0.3s ease;
+    animation: fadeInRow 0.5s ease both;
 }
 
 .table-container tbody tr:hover {
-  background: #eef2ff;
-  transform: scale(1.005);
+    background-color: #f8fafc;
 }
 
 .table-container tbody tr:last-child td {
-  border-bottom: none;
+    border-bottom: none;
 }
 
-/* Employee ID */
+/* ===== LOADING / EMPTY MESSAGE ===== */
 
-.table-container tbody td:first-child {
-  color: #4f46e5;
-  font-weight: 700;
-}
-
-/* Employee name */
-
-.table-container tbody td:nth-child(2) {
-  color: #1e293b;
-  font-weight: 650;
-}
-
-/* Check-in time */
-
-.table-container tbody td:last-child {
-  color: #16a34a;
-  font-weight: 700;
-}
-
-/* ===== LOADING AND EMPTY MESSAGE ===== */
-
-.attendance-panel > p {
-  max-width: 1200px;
-  margin: 25px auto;
-  padding: 25px;
-  background: white;
-  border-radius: 14px;
-  color: #64748b;
-  text-align: center;
-  font-size: 15px;
-  box-shadow: 0 5px 20px rgba(30, 41, 59, 0.05);
-  position: relative;
-  z-index: 1;
-  animation: fadeIn 0.5s ease;
+.attendance-panel p {
+    text-align: center;
+    padding: 25px;
+    color: #666;
+    font-size: 14px;
 }
 
 /* ===== SHOW EMPLOYEE BUTTON ===== */
 
 .attendance-panel > div:last-child {
-  max-width: 1200px;
-  margin: 30px auto 0;
-  display: flex;
-  justify-content: flex-end;
-  position: relative;
-  z-index: 1;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 30px;
 }
 
 .attendance-panel > div:last-child button {
-  padding: 13px 28px;
-  border: none;
-  border-radius: 10px;
-  background: linear-gradient(
-    135deg,
-    #7c3aed,
-    #a855f7
-  );
-  color: white;
-  font-size: 14px;
-  font-weight: 700;
-  cursor: pointer;
-  box-shadow: 0 5px 15px rgba(124, 58, 237, 0.2);
-  transition: all 0.3s ease;
+    min-width: 150px;
+    padding: 12px 22px;
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
 .attendance-panel > div:last-child button:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 9px 22px rgba(124, 58, 237, 0.3);
-}
-
-.attendance-panel > div:last-child button:active {
-  transform: scale(0.96);
+    background-color: #1d4ed8;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 12px rgba(37, 99, 235, 0.2);
 }
 
 /* ===== ANIMATIONS ===== */
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 @keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+    from {
+        opacity: 0;
+        transform: translateY(-15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 @keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(25px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-@keyframes rowAppear {
-  from {
-    opacity: 0;
-    transform: translateX(-15px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+@keyframes fadeInRow {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-@keyframes floating {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(25px);
-  }
-}
-
-/* ===== RESPONSIVE DESIGN ===== */
+/* ===== RESPONSIVE ===== */
 
 @media (max-width: 768px) {
 
-  .attendance-panel {
-    padding: 35px 18px;
-  }
+    .attendance-panel {
+        padding: 20px 15px;
+    }
 
-  .section-heading h2 {
-    font-size: 25px;
-  }
+    .section-heading h2 {
+        font-size: 23px;
+    }
 
-  .section-heading {
-    align-items: flex-start;
-  }
+    .table-container {
+        padding: 12px;
+    }
 
-  .table-container {
-    padding: 8px;
-    border-radius: 12px;
-  }
-
-  .table-container th,
-  .table-container td {
-    padding: 14px;
-    font-size: 12px;
-  }
+    .table-container th,
+    .table-container td {
+        padding: 13px;
+        font-size: 13px;
+    }
 }
 
 @media (max-width: 480px) {
 
-  .attendance-panel {
-    padding: 25px 12px;
-  }
+    .section-heading {
+        gap: 10px;
+    }
 
-  .section-heading h2 {
-    font-size: 22px;
-  }
+    .section-heading h2 {
+        font-size: 20px;
+    }
 
-  .section-heading {
-    flex-direction: column;
-    align-items: flex-start;
-  }
+    .secondary-button {
+        width: auto;
+        padding: 10px 15px;
+    }
 
-  .secondary-button {
-    width: 100%;
-  }
-
-  .attendance-panel > div:last-child {
-    justify-content: center;
-  }
-
-  .attendance-panel > div:last-child button {
-    width: 100%;
-  }
-
+    .attendance-panel > div:last-child {
+        justify-content: center;
+    }
 }
 
-/* ===== ACCESSIBILITY ===== */
+/* ===== REDUCED MOTION ===== */
 
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation: none !important;
-    transition: none !important;
-  }
+    .attendance-panel,
+    .section-heading,
+    .table-container,
+    .table-container tbody tr {
+        animation: none !important;
+    }
+
+    .attendance-panel * {
+        transition: none !important;
+    }
 }

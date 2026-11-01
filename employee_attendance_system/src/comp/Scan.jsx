@@ -5,10 +5,7 @@ import { Html5Qrcode } from "html5-qrcode";
 import "../css/scan.css";
 import Api from "../Api";
 
-
-
 function Scan() {
-
   const [attendanceMessage, setAttendanceMessage] = useState("");
   const [attendanceError, setAttendanceError] = useState("");
   const [cameraMessage, setCameraMessage] = useState("");
@@ -19,7 +16,6 @@ function Scan() {
   useEffect(() => {
     return () => {
       const scanner = scannerRef.current;
-
       if (scanner !== null) {
         scanner.stop().catch(() => {});
       }
@@ -27,75 +23,71 @@ function Scan() {
   }, []);
 
   async function stopScanner() {
-
     const scanner = scannerRef.current;
-
     if (scanner !== null) {
-
       try {
         await scanner.stop();
       } catch (error) {
         console.log("Scanner was already stopped.");
       }
-
       try {
         await scanner.clear();
       } catch (error) {
         console.log("Scanner cleanup completed.");
       }
-
       scannerRef.current = null;
     }
   }
 
   async function verifyAndMarkAttendance(qrToken) {
-
     if (processingRef.current) return;
 
     processingRef.current = true;
-
     setAttendanceMessage("");
     setAttendanceError("");
 
     await stopScanner();
 
     try {
+      // Payload key matches your backend DTO ('qrtiken')
+      const response = await Api.post(`/api/attendance/scan`, {
+        qrtiken: qrToken
+      });
 
-      const response = await Api.post(
-        `/api/attendance/scan`,
-        {
-          qrtiken: qrToken
-        }
-      );
-
-      setAttendanceMessage(
-        response.data.name + " — " + response.data.message
-      );
-
-    } catch (error) {
-
-      if (error.response && error.response.data) {
-
-        setAttendanceError(
-          error.response.data.message ||
-          "Unable to mark attendance."
-        );
-
-      } else {
-
-        setAttendanceError(
-          "Could not connect to the backend."
-        );
-
+      // Safely handle whatever the backend returns (Object or Plain Text)
+      let displayMessage = "Attendance recorded successfully.";
+      
+      if (typeof response.data === "string") {
+        displayMessage = response.data;
+      } else if (response.data) {
+        const namePart = response.data.name ? `${response.data.name} — ` : "";
+        const msgPart = response.data.message || response.data.status || "Success";
+        displayMessage = `${namePart}${msgPart}`;
       }
 
+      setAttendanceMessage(displayMessage);
+
+    } catch (error) {
+      console.error("Attendance API Scan Error:", error);
+
+      if (error.response && error.response.data) {
+        const errData = error.response.data;
+        setAttendanceError(
+          typeof errData === "string" ? errData : (errData.message || "Unable to mark attendance.")
+        );
+      } else if (error.request) {
+        setAttendanceError(
+          "Could not connect to the backend server. Check if Render backend is active."
+        );
+      } else {
+        setAttendanceError("An error occurred while processing attendance.");
+      }
     } finally {
       processingRef.current = false;
     }
   }
 
   async function startScanner() {
-
     if (scannerRef.current !== null) return;
 
     setAttendanceMessage("");
@@ -103,18 +95,14 @@ function Scan() {
     setCameraMessage("");
 
     try {
-
       const cameras = await Html5Qrcode.getCameras();
 
       if (cameras.length === 0) {
-        setCameraMessage(
-          "No camera found. Please connect a camera."
-        );
+        setCameraMessage("No camera found. Please connect a camera.");
         return;
       }
 
       const scanner = new Html5Qrcode("reader");
-
       scannerRef.current = scanner;
 
       await scanner.start(
@@ -132,48 +120,27 @@ function Scan() {
         () => {}
       );
 
-      setCameraMessage(
-        "Camera started. Point it at the employee QR code."
-      );
-
+      setCameraMessage("Camera started. Point it at the employee QR code.");
     } catch (error) {
-
       console.error("Camera error:", error);
-
       scannerRef.current = null;
-
-      setCameraMessage(
-        "Could not start camera. Please allow camera permission."
-      );
+      setCameraMessage("Could not start camera. Please allow camera permission.");
     }
   }
 
   return (
-
     <div className="scan-container">
-
       <div className="scan-content">
-
         <div className="scan-header">
-
-          <div className="scan-icon">
-            📷
-          </div>
-
-          <p className="scan-subtitle">
-            EMPLOYEE ATTENDANCE SYSTEM
-          </p>
-
+          <div className="scan-icon">📷</div>
+          <p className="scan-subtitle">EMPLOYEE ATTENDANCE SYSTEM</p>
           <h1>QR Attendance Scanner</h1>
-
           <p className="scan-description">
             Scan your employee QR code to mark your attendance quickly and securely.
           </p>
-
         </div>
 
         <div className="scanner-card">
-
           <div className="scanner-card-header">
             <h2>Scan Employee QR Code</h2>
             <span className="live-indicator">
@@ -191,12 +158,11 @@ function Scan() {
           </div>
 
           <div className="scan-buttons">
-
             <button
               type="button"
               className="start-button"
               onClick={startScanner}
-              disabled={!!cameraMessage && !!scannerRef.current}
+              disabled={!!cameraMessage && cameraMessage.includes("Camera started")}
             >
               <span>▶</span> Start Scanner
             </button>
@@ -211,13 +177,10 @@ function Scan() {
             >
               <span>■</span> Stop Scanner
             </button>
-
           </div>
 
           {cameraMessage && (
-            <div className="camera-message">
-              {cameraMessage}
-            </div>
+            <div className="camera-message">{cameraMessage}</div>
           )}
 
           {attendanceMessage && (
@@ -239,18 +202,13 @@ function Scan() {
               </div>
             </div>
           )}
-
         </div>
 
         <div className="scan-footer">
-          <span>🔒</span>
-          Secure Employee Attendance Management System
+          <span>🔒</span> Secure Employee Attendance Management System
         </div>
-
       </div>
-
     </div>
-
   );
 }
 

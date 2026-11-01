@@ -20,7 +20,7 @@ const Employee = () => {
                 `/api/getemployees`
             );
 
-            setuser(res.data);
+            setuser(res);
 
         } catch (error) {
 

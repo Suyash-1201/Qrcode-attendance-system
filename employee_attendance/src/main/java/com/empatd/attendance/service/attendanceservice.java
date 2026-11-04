@@ -31,7 +31,7 @@ public class attendanceservice {
     
     private final double gatelat2=18.3808762;
     private final double gatelon2=73.6496320;
-    private final double radious=100.0;
+    private final double radious=10000.0;
 
     @Transactional
     public attendanceresponse scan(scanrequest req) {

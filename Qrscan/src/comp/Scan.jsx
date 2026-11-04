@@ -1,5 +1,4 @@
 
-
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import "../css/scan.css";
@@ -18,7 +17,6 @@ function Scan() {
   useEffect(() => {
     return () => {
       const scanner = scannerRef.current;
-
       if (scanner) {
         scanner.stop()
           .then(() => scanner.clear())
@@ -50,85 +48,87 @@ function Scan() {
 
   // Verify QR and mark attendance
   async function verifyAndMarkAttendance(qrToken) {
+    // 1. Guard check: Prevent multiple triggers immediately
     if (processingRef.current) return;
-
-    processingRef.current = true;
+    processingRef.current = true; // Lock immediately before async GPS call
 
     setAttendanceMessage("");
     setAttendanceError("");
-    setCameraMessage("QR code detected. Processing attendance...");
+    setCameraMessage("QR code detected. Getting location...");
 
-    if(!navigator.geolocation){
-      setCameraMessage("Geolocation is not supported by your browser");
+    if (!navigator.geolocation) {
+      setAttendanceError("Geolocation is not supported by your browser");
+      setCameraMessage("");
+      processingRef.current = false; // Reset lock if unsupported
       return;
     }
 
-    navigator.geolocation.getCurrentPosition((
-     async (positon)=>{
-        const lat1=positon.coords.latitude;
-        const lon1=positon.coords.longitude;
-        await stopScanner();
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        try {
+          const lat1 = position.coords.latitude;
+          const lon1 = position.coords.longitude;
+          
+          setCameraMessage("Processing attendance...");
+          await stopScanner();
 
-    try {
-      const response = await Api.post("/api/attendance/scan", {
-        qrtiken: qrToken,
-        lat1:lat1,
-        lon1:lon1
-      });
+          const response = await Api.post("/api/attendance/scan", {
+            qrtiken: qrToken,
+            lat1: lat1,
+            lon1: lon1
+          });
 
-      let displayMessage = "Attendance recorded successfully.";
+          let displayMessage = "Attendance recorded successfully.";
 
-      if (typeof response.data === "string") {
-        displayMessage = response.data;
-      } else if (response.data) {
-        const namePart = response.data.name
-          ? `${response.data.name} — `
-          : "";
+          if (typeof response.data === "string") {
+            displayMessage = response.data;
+          } else if (response.data) {
+            const namePart = response.data.name
+              ? `${response.data.name} — `
+              : "";
 
-        const msgPart =
-          response.data.message ||
-          response.data.status ||
-          "Success";
+            const msgPart =
+              response.data.message ||
+              response.data.status ||
+              "Success";
 
-        displayMessage = `${namePart}${msgPart}`;
-      }
+            displayMessage = `${namePart}${msgPart}`;
+          }
 
-      setAttendanceMessage(displayMessage);
-      setCameraMessage("Attendance scan completed successfully.");
+          setAttendanceMessage(displayMessage);
+          setCameraMessage("Attendance scan completed successfully.");
 
-    } catch (error) {
-      console.error("Attendance API Scan Error:", error);
+        } catch (error) {
+          console.error("Attendance API Scan Error:", error);
 
-      if (error.response && error.response.data) {
-        const errData = error.response.data;
-
-        setAttendanceError(
-          typeof errData === "string"
-            ? errData
-            : errData.message || "Unable to mark attendance."
-        );
-
-      } else if (error.request) {
-        setAttendanceError(
-          "Could not connect to the backend server. Check if backend is active."
-        );
-
-      } else {
-        setAttendanceError(
-          "An error occurred while processing attendance."
-        );
-      }
-
-    } finally {
-      processingRef.current = false;
-    }
+          if (error.response && error.response.data) {
+            const errData = error.response.data;
+            setAttendanceError(
+              typeof errData === "string"
+                ? errData
+                : errData.message || "Unable to mark attendance."
+            );
+          } else if (error.request) {
+            setAttendanceError(
+              "Could not connect to the backend server. Check if backend is active."
+            );
+          } else {
+            setAttendanceError(
+              "An error occurred while processing attendance."
+            );
+          }
+        } finally {
+          processingRef.current = false;
+        }
       },
       (error) => {
-        setCameraMessage("GPS Error: Please enable location permissions in your browser.");
+        console.error("GPS Error:", error);
+        setAttendanceError("GPS Error: Please enable location permissions in your browser.");
+        setCameraMessage("");
+        processingRef.current = false; // Release lock on error so they can retry
       },
-      { enableHighAccuracy: true }
-
-    ))
+      { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+    );
   }
 
   // Start scanner with mobile back camera
@@ -142,14 +142,10 @@ function Scan() {
     setCameraMessage("Starting camera...");
 
     try {
-      // Dynamic import reduces initial bundle size
       const { Html5Qrcode } = await import("html5-qrcode");
-
       const scanner = new Html5Qrcode("reader");
-
       scannerRef.current = scanner;
 
-      // Request mobile rear camera
       await scanner.start(
         { facingMode: "environment" },
         {

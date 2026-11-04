@@ -127,7 +127,7 @@ function Scan() {
         setCameraMessage("");
         processingRef.current = false; // Release lock on error so they can retry
       },
-      { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+      { enableHighAccuracy: false, timeout: 20000, maximumAge: 30000 }
     );
   }
 

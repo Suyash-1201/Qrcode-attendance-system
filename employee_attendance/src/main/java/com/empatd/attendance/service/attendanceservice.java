@@ -25,11 +25,25 @@ public class attendanceservice {
 
     @Autowired
     private attendancereposetory attandancerepo;
+    
+    @Autowired
+    private distancecalculateservice geoserv;
+    
+    private final double gatelat2=18.3808762;
+    private final double gatelon2=73.6496320;
+    private final double radious=100.0;
 
     @Transactional
     public attendanceresponse scan(scanrequest req) {
 
     	String qrtoken = req.getQrtiken();
+    	
+    	
+    	double distance=geoserv.calculatedistance(req.getLat1(),req.getLon1(), gatelat2, gatelon2);
+    	
+    	if(distance > radious) {
+    		throw new RuntimeException("Attendance failed: You are outside the company premises.");
+    	}
 
         employee emp = emprepo.findByQrtoken(qrtoken);
 

@@ -58,11 +58,22 @@ function Scan() {
     setAttendanceError("");
     setCameraMessage("QR code detected. Processing attendance...");
 
-    await stopScanner();
+    if(!navigator.geolocation){
+      setCameraMessage("Geolocation is not supported by your browser");
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition((
+     async (positon)=>{
+        const lat1=positon.coords.latitude;
+        const lon1=positon.coords.longitude;
+        await stopScanner();
 
     try {
       const response = await Api.post("/api/attendance/scan", {
-        qrtiken: qrToken
+        qrtiken: qrToken,
+        lat1:lat1,
+        lon1:lon1
       });
 
       let displayMessage = "Attendance recorded successfully.";
@@ -111,6 +122,13 @@ function Scan() {
     } finally {
       processingRef.current = false;
     }
+      },
+      (error) => {
+        setCameraMessage("GPS Error: Please enable location permissions in your browser.");
+      },
+      { enableHighAccuracy: true }
+
+    ))
   }
 
   // Start scanner with mobile back camera
